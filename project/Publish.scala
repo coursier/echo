@@ -5,6 +5,7 @@ import sbt.Keys._
 object Publish {
 
   private def pomStuff = Seq(
+    organization := "io.get-coursier",
     licenses := Seq("Apache 2.0" -> url("http://opensource.org/licenses/Apache-2.0")),
     homepage := Some(url("https://github.com/coursier/echo")),
     scmInfo := Some(ScmInfo(

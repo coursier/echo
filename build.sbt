@@ -1,14 +1,28 @@
 
-lazy val echo = project
-  .in(file("jvm"))
+lazy val jvm = project
   .enablePlugins(PackPlugin)
   .settings(
-    organization := "io.get-coursier",
-    scalacOptions ++= Seq("-feature", "-deprecation"),
     crossPaths := false,
     autoScalaLibrary := false,
-    organization := "io.get-coursier",
+    name := "echo",
+    Publish.settings
+  )
+
+lazy val native = project
+  .enablePlugins(ScalaNativePlugin)
+  .settings(
+    name := "echo",
+    scalaVersion := "2.11.12",
     scalacOptions ++= Seq("-feature", "-deprecation"),
     Publish.settings
   )
 
+lazy val echo = project
+  .in(file("."))
+  .aggregate(
+    jvm,
+    native
+  )
+  .settings(
+    publishArtifact := false
+  )

@@ -1,13 +1,17 @@
 language: scala
 scala:
-- 2.12.4
+- 2.11.12
 jdk:
 - oraclejdk8
+dist: trusty
+sudo: required
+before_install:
+- curl https://raw.githubusercontent.com/scala-native/scala-native/v0.3.6/bin/travis_setup.sh | bash -x
 script: sbt -batch ++${TRAVIS_SCALA_VERSION} test $(if [[ "$TRAVIS_PULL_REQUEST" ==
-  false && "$TRAVIS_BRANCH" == master ]]; then echo "publish"; fi)
+  false && "$TRAVIS_BRANCH" == master ]]; then echo publish; fi)
 cache:
   directories:
-  - "$HOME/.coursier"
+  - "$HOME/.cache/coursier"
   - "$HOME/.ivy2/cache"
   - "$HOME/.sbt"
 branches:
