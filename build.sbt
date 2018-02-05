@@ -1,6 +1,6 @@
 
 lazy val echo = project
-  .in(file("."))
+  .in(file("jvm"))
   .enablePlugins(PackPlugin)
   .settings(
     organization := "io.get-coursier",
