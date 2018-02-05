@@ -24,5 +24,6 @@ lazy val echo = project
     native
   )
   .settings(
-    publishArtifact := false
+    publishArtifact := false,
+    Publish.settings // seems required for sbt publish to be fine…
   )
