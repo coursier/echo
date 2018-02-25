@@ -1,29 +1,25 @@
 
-lazy val jvm = project
-  .enablePlugins(PackPlugin)
-  .settings(
-    crossPaths := false,
-    autoScalaLibrary := false,
-    name := "echo",
-    Publish.settings
-  )
-
-lazy val native = project
-  .enablePlugins(ScalaNativePlugin)
-  .settings(
-    name := "echo",
-    scalaVersion := "2.11.12",
-    scalacOptions ++= Seq("-feature", "-deprecation"),
-    Publish.settings
-  )
-
 lazy val echo = project
   .in(file("."))
-  .aggregate(
-    jvm,
-    native
-  )
+  .enablePlugins(SbtProguard)
   .settings(
-    publishArtifact := false,
-    Publish.settings // seems required for sbt publish to be fine…
+    name := "echo",
+    version := "1.0.2-SNAPSHOT",
+    scalaVersion := "2.12.4",
+    scalacOptions ++= Seq("-feature", "-deprecation"),
+    Publish.settings,
+    proguardOptions.in(Proguard) ++= Seq(
+      // "-dontoptimize", // uncomment to make it work (but it doesn't really proguard then…)
+      "-dontnote",
+      "-dontwarn",
+      "-ignorewarnings",
+      ProguardOptions.keepMain("coursier.echo.Echo")
+    ),
+    proguardInputFilter.in(Proguard) := { file =>
+      file.name match {
+        case n if n.contains("echo") => None
+        case n => Some("!META-INF/**")
+      }
+    }
   )
+

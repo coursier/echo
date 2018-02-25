@@ -24,25 +24,6 @@ object Publish {
     }
   )
 
-  private def pushToSonatypeStuff = Seq(
-    publishMavenStyle := true,
-    publishTo := {
-      val nexus = "https://oss.sonatype.org/"
-      if (isSnapshot.value)
-        Some("snapshots" at nexus + "content/repositories/snapshots")
-      else
-        Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-    },
-    credentials ++= {
-      Seq("SONATYPE_USER", "SONATYPE_PASS").map(sys.env.get) match {
-        case Seq(Some(user), Some(pass)) =>
-          Seq(Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", user, pass))
-        case _ =>
-          Seq()
-      }
-    }
-  )
-
-  lazy val settings = pomStuff ++ pushToSonatypeStuff
+  lazy val settings = pomStuff
 
 }
