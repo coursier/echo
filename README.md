@@ -29,3 +29,11 @@ Exception in thread "main" java.lang.IncompatibleClassChangeError: Interface met
 	at coursier.echo.Echo$.main(Echo.scala:7)
 	at coursier.echo.Echo.main(Echo.scala)
 ```
+
+But it works fine in 2.11
+```
+$ sbt '++2.11.12!' proguard:proguard
+…
+$ java -cp target/scala-2.11/proguard/echo_2.11-1.0.2-SNAPSHOT.jar coursier.echo.Echo aa
+aa
+```
