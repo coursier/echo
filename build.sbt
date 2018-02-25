@@ -10,6 +10,7 @@ lazy val echo = project
     Publish.settings,
     proguardOptions.in(Proguard) ++= Seq(
       // "-dontoptimize", // uncomment to make it work (but it doesn't really proguard then…)
+      "-dontobfuscate",
       "-dontnote",
       "-dontwarn",
       "-ignorewarnings",
