@@ -17,11 +17,21 @@ lazy val native = project
     Publish.settings
   )
 
+lazy val props = project
+  .enablePlugins(PackPlugin)
+  .settings(
+    crossPaths := false,
+    autoScalaLibrary := false,
+    name := "props",
+    Publish.settings
+  )
+
 lazy val echo = project
   .in(file("."))
   .aggregate(
     jvm,
-    native
+    native,
+    props
   )
   .settings(
     publishArtifact := false,

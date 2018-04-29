@@ -7,8 +7,9 @@ dist: trusty
 sudo: required
 before_install:
 - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
-script: sbt -batch ++${TRAVIS_SCALA_VERSION} test $(if [[ "$TRAVIS_PULL_REQUEST" ==
-  false && "$TRAVIS_BRANCH" == master ]]; then echo publish; fi)
+script:
+- ./test.sh
+- sbt -batch ++${TRAVIS_SCALA_VERSION} test $(if [[ "$TRAVIS_PULL_REQUEST" == false && "$TRAVIS_BRANCH" == master ]]; then echo publish; fi)
 cache:
   directories:
   - "$HOME/.cache/coursier"
