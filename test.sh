@@ -5,9 +5,17 @@ if [ ! -e jvm/target/pack/bin/echo ]; then
   sbt jvm/pack
 fi
 
+if [ ! -e props/target/pack/bin/props ]; then
+  sbt props/pack
+fi
+
 
 runEcho() {
   jvm/target/pack/bin/echo "$@"
+}
+
+runProps() {
+  props/target/pack/bin/props "$@"
 }
 
 RED='\033[0;31m'
@@ -35,5 +43,18 @@ echoTest1() {
   fi
 }
 
+propsTest1() {
+  local EXPECTED="$(pwd)"
+  local OUTPUT="$(runProps user.dir)"
+  if [ "$OUTPUT" = "$EXPECTED" ]; then
+    passed propsTest1
+  else
+    echo "Expected $EXPECTED, got $OUTPUT"
+    failed propsTest1
+  fi
+}
+
 
 echoTest1
+
+propsTest1
