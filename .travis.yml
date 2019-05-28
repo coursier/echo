@@ -1,24 +1,33 @@
 language: scala
-scala:
-- 2.11.12
-jdk:
-- oraclejdk8
+jdk: openjdk8
 dist: trusty
 sudo: required
+
+git:
+  depth: false
+
 before_install:
 - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
+
+stages:
+  - name: test
+  - name: release
+    if: (branch = master AND type = push) OR (tag IS present)
+jobs:
+  include:
+  - scala: 2.11.12
+  - stage: release
+    script: sbt ci-release
+
 script:
 - ./test.sh
-- sbt -batch ++${TRAVIS_SCALA_VERSION} test $(if [[ "$TRAVIS_PULL_REQUEST" == false && "$TRAVIS_BRANCH" == master ]]; then echo publish; fi)
+- sbt ++${TRAVIS_SCALA_VERSION} test
+
 cache:
   directories:
-  - "$HOME/.cache/coursier"
-  - "$HOME/.ivy2/cache"
-  - "$HOME/.sbt"
+  - $HOME/.cache
+  - $HOME/.ivy2/cache
+  - $HOME/.sbt
 branches:
   only:
   - master
-env:
-  global:
-  - secure: KSBJHMYHXWbqg/lW39AHJTuDwimJ00ONlP4DFTyO/y9/noyvKiqRRvSEtKE5qf/BFBkoo3saPldRTkv7VWA5gYNERNM7MJqZYLuvkGkW0QN4YCTICplFQbBnZVwS9NtWesnti7riwi5v4CS8wmso6aYw1VslDm/rzSmJArmjjhc/pkh6AbqwceNf0tpaQ3v0M+MYwkO6NIKirnBsRmKQ52s2hFqAueJwLD9O7HxoUrB4IOqStGWICkchEuYsijs2gbDQqHi1Zq1DlzYG9FExLAWEwA8+/+8GazblBoQmTMTbJgvPjqHAeHnwGuD5RqpFouvpm0VOJg8t1SnxvwUx3UVfLHwWas+YgF1qO7fMs/0VxzfzWhECmcFWsXcZsks6x4vZpYq8XOd0dtNHWHIbhOC6jzuUAbZxGbD4Em6MzVfjIeep7FuscfweJ5/QVosKUMYqk+Hvxo74qRokGNQK0qnQ2a+UBp+puxs+RCDjQFbG5O+EtdGMHU7Y8pMIZmClU5ZBt1gE51Ni9nf/RCNMLK+Y3yP4X34Y4+KcEpjs/2eEGHET32m3j6mYo1FOWe0KPDaYCdRxNBzxTwjGeDPyK1We2BKaLjsLmLqZ5/XgdCF8v3bVIKz4gcDrXYAvLFxKqxeZ/xOTUqcLJr8D4au1o0PFdvOIE70paYhpHS/pd84=
-  - secure: MtOxs2yrTogxRjBaSk88skRsQ4nNXWJ5fOXYmMQA6JYYMgP2k1q6UW54Iul01vy8gHbnaKXquQZXJwPakZdOFNso8blMlXxat5ue7r4Y4lnLw458JNa7le2a/wyQVIjfEe1Rmvei1k5jXdF168UTYEVSKq2K6zNA5tmytkLJUj8CEV7J/74a9bBNEGdGfVSyZ6i3ZAdfPQj7q2+uFtN3NFvMuTsFe/vZltiExRANBnRsQ2v3/fsm8Uw8lDjCTMqNrx+MdUXrvQFuwF0HCO493bfFgcKp8Gy51mK54GzTtA6hFPtWQW1Elnw0PZl2tIfTGxmW97F9+SYx4t04WtsSm2ED3KLrIYEsaMdL8V/HS0nNa5AhtD1q0QfeIbFCbbKWGtaJ6LjubI/sZ+l/B+7lqFvVa4q7Zx3eoY6UbEZm5aLhr75mG3cBw9tHZT8QL1y/B/HAMYJpwZDW1xQVpquZBH4JfiXgrZkIQFzMkRL1p0mIhvlM1KUtnseP3zZawatxsyAkxSd+gQ9vPhkCsqd6jjzDRNJ4GDNTp+gWX5M/ZmmEIjEIca7N7cBpTYnQF29FkR243PzwhnDCYPQeIxSKutnKVWpimnVZYocRSvjmzsytfH+yq06JnzyxiMAcGbvcpYLWBhSHB1I5+wx7U/VHt4EUPqILf14nEiDRpf1oyfY=

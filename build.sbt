@@ -1,11 +1,24 @@
 
+inThisBuild(List(
+  organization := "io.get-coursier",
+  homepage := Some(url("https://github.com/coursier/echo")),
+  licenses := Seq("Apache 2.0" -> url("http://opensource.org/licenses/Apache-2.0")),
+  developers := List(
+    Developer(
+      "alexarchambault",
+      "Alexandre Archambault",
+      "",
+      url("https://github.com/alexarchambault")
+    )
+  )
+))
+
 lazy val jvm = project
   .enablePlugins(PackPlugin)
   .settings(
     crossPaths := false,
     autoScalaLibrary := false,
-    name := "echo",
-    Publish.settings
+    name := "echo"
   )
 
 lazy val native = project
@@ -13,8 +26,7 @@ lazy val native = project
   .settings(
     name := "echo",
     scalaVersion := "2.11.12",
-    scalacOptions ++= Seq("-feature", "-deprecation"),
-    Publish.settings
+    scalacOptions ++= Seq("-feature", "-deprecation")
   )
 
 lazy val props = project
@@ -22,8 +34,7 @@ lazy val props = project
   .settings(
     crossPaths := false,
     autoScalaLibrary := false,
-    name := "props",
-    Publish.settings
+    name := "props"
   )
 
 lazy val echo = project
@@ -34,6 +45,5 @@ lazy val echo = project
     props
   )
   .settings(
-    publishArtifact := false,
-    Publish.settings // seems required for sbt publish to be fine…
+    skip.in(publish) := true
   )
