@@ -21,11 +21,14 @@ lazy val jvm = project
     name := "echo"
   )
 
+val scala211 = "2.11.12"
+
 lazy val native = project
   .enablePlugins(ScalaNativePlugin)
   .settings(
     name := "echo",
-    scalaVersion := "2.11.12",
+    scalaVersion := scala211,
+    crossScalaVersions := Seq(scala211),
     scalacOptions ++= Seq("-feature", "-deprecation")
   )
 
@@ -47,3 +50,5 @@ lazy val echo = project
   .settings(
     skip.in(publish) := true
   )
+
+crossScalaVersions := Nil
