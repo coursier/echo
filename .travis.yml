@@ -6,8 +6,6 @@ sudo: required
 git:
   depth: false
 
-before_install:
-- curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
 
 stages:
   - name: test
@@ -16,6 +14,8 @@ stages:
 jobs:
   include:
   - scala: 2.11.12
+    before_install:
+    - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
   - stage: release
     script: sbt ci-release
 
