@@ -21,15 +21,21 @@ jobs:
     script: sbt ci-release
   - stage: native-launchers
     name: Linux
-    script: curl -Lo cs https://git.io/coursier-cli-linux && chmod +x cs && ./cs bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-linux
+    before_install:
+    - ./setup-cs.sh
+    script: ./cs bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-linux io.get-coursier:echo:$(echo "$TRAVIS_TAG" | sed 's/^v//')
   - stage: native-launchers
     name: Windows
     os: windows
-    script: curl -Lo cs.exe https://git.io/coursier-cli-windows-exe && ./cs.exe bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-win32
+    before_install:
+    - ./setup-cs.sh
+    script: ./cs.exe bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-win32 io.get-coursier:echo:$(echo "$TRAVIS_TAG" | sed 's/^v//')
   - stage: native-launchers
     os: osx
     name: macOS
-    script: curl -Lo cs https://git.io/coursier-cli-macos && chmod +x cs && ./cs bootstrap --native-image --graalvm 19.3 -o echo-x86_64-apple-darwin
+    before_install:
+    - ./setup-cs.sh
+    script: ./cs bootstrap --native-image --graalvm 19.3 -o echo-x86_64-apple-darwin io.get-coursier:echo:$(echo "$TRAVIS_TAG" | sed 's/^v//')
 
 script:
 - ./test.sh
@@ -38,6 +44,7 @@ script:
 cache:
   directories:
   - $HOME/.cache
+  - $HOME/Library/Caches
   - $HOME/.ivy2/cache
   - $HOME/.sbt
 branches:
