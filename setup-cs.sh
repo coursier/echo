@@ -19,7 +19,7 @@ else
   # assuming Windows…
   URL="https://github.com/coursier/coursier/releases/download/v$VERSION/cs-x86_64-pc-win32.exe"
   env
-  CACHE_BASE="$LocalAppData/Coursier/v1" # TODO Check that
+  CACHE_BASE="$LOCALAPPDATA/Coursier/v1" # TODO Check that
   CS="cs.exe"
 DO_CHMOD="0"
 fi
