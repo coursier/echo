@@ -42,5 +42,3 @@ if [ "$DO_CHMOD" = "1" ]; then
   chmod +x "$CS$EXT"
 fi
 
-ls -lh
-./cs --help
