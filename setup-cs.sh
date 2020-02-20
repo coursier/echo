@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ev
 
 VERSION="2.0.0-RC6-10"
 
@@ -41,4 +41,5 @@ if [ "$DO_CHMOD" = "1" ]; then
   chmod +x "$CS"
 fi
 
+ls -lh
 "$CS" --help

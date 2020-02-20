@@ -9,6 +9,7 @@ git:
 
 stages:
   - name: test
+    if: (branch = master AND type = push) OR (tag IS present)
   - name: release
     if: (branch = master AND type = push) OR (tag IS present)
   - name: native-launchers
