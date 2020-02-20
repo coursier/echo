@@ -1,4 +1,4 @@
-language: scala
+language: java
 jdk: openjdk8
 dist: trusty
 sudo: required
@@ -18,7 +18,7 @@ jobs:
     before_install:
     - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
   - stage: release
-    script: sbt ci-release
+    script: ./sbt ci-release
   - stage: native-launchers
     name: Linux
     before_install:
@@ -39,7 +39,7 @@ jobs:
 
 script:
 - ./test.sh
-- sbt ++${TRAVIS_SCALA_VERSION} test
+- ./sbt ++${TRAVIS_SCALA_VERSION} test
 
 cache:
   directories:
