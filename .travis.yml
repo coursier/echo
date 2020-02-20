@@ -36,7 +36,7 @@ jobs:
     before_install:
     - choco install -y windows-sdk-7.1 # vcbuildtools kb2519277
     - ./setup-cs.sh
-    script: ./cs.exe bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-win32 io.get-coursier:echo:$(echo "$TRAVIS_TAG" | sed 's/^v//')
+    script: ./windows-native-image.bat cs bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-win32 io.get-coursier:echo:$(echo "$TRAVIS_TAG" | sed 's/^v//')
   - stage: native-launchers
     env:
     - TRAVIS_TAG=v1.0.3
