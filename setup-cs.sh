@@ -7,6 +7,7 @@ URL=""
 CACHE_BASE=""
 CS="./cs"
 DO_CHMOD="1"
+EXT=""
 
 # https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux/17072017#17072017
 if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
@@ -20,7 +21,7 @@ else
   URL="https://github.com/coursier/coursier/releases/download/v$VERSION/cs-x86_64-pc-win32.exe"
   env
   CACHE_BASE="$LOCALAPPDATA/Coursier/v1" # TODO Check that
-  CS="cs.exe"
+  EXT=".exe"
 DO_CHMOD="0"
 fi
 
@@ -36,11 +37,10 @@ else
   mv "$TMP_DEST" "$DEST"
 fi
 
-cp "$DEST" "$CS"
+cp "$DEST" "$CS$EXT"
 if [ "$DO_CHMOD" = "1" ]; then
-  chmod +x "$CS"
+  chmod +x "$CS$EXT"
 fi
 
 ls -lh
 ./cs --help
-"$CS" --help
