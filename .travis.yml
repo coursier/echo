@@ -11,6 +11,8 @@ stages:
   - name: test
   - name: release
     if: (branch = master AND type = push) OR (tag IS present)
+  - name: native-launchers
+    if: (branch = master AND type = push) OR (tag IS present)
 jobs:
   include:
   - scala: 2.11.12
@@ -18,6 +20,17 @@ jobs:
     - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
   - stage: release
     script: sbt ci-release
+  - stage: native-launchers
+    name: Linux
+    script: curl -Lo cs https://git.io/coursier-cli-linux && chmod +x cs && ./cs bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-linux
+  - stage: native-launchers
+    name: Windows
+    os: windows
+    script: curl -Lo cs.exe https://git.io/coursier-cli-windows-exe && ./cs.exe bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-win32
+  - stage: native-launchers
+    os: osx
+    name: macOS
+    script: curl -Lo cs https://git.io/coursier-cli-macos && chmod +x cs && ./cs bootstrap --native-image --graalvm 19.3 -o echo-x86_64-apple-darwin
 
 script:
 - ./test.sh
