@@ -32,6 +32,8 @@ jobs:
     script: ./cs.exe bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-win32 io.get-coursier:echo:$(echo "$TRAVIS_TAG" | sed 's/^v//')
   - stage: native-launchers
     os: osx
+    osx_image: xcode9.4
+    jdk: openjdk9
     name: macOS
     before_install:
     - ./setup-cs.sh
