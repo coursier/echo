@@ -12,7 +12,6 @@ stages:
   - name: release
     if: (branch = master AND type = push) OR (tag IS present)
   - name: native-launchers
-    if: (branch = master AND type = push) OR (tag IS present)
 jobs:
   include:
   - scala: 2.11.12
