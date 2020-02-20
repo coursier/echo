@@ -42,4 +42,5 @@ if [ "$DO_CHMOD" = "1" ]; then
 fi
 
 ls -lh
+./cs --help
 "$CS" --help
