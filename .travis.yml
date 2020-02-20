@@ -23,30 +23,13 @@ jobs:
   - stage: native-launchers
     env:
     - TRAVIS_TAG=v1.0.3
-    name: Linux
-    before_install:
-    - ./setup-cs.sh
-    script: ./cs bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-linux io.get-coursier:echo:$(echo "$TRAVIS_TAG" | sed 's/^v//')
-  - stage: native-launchers
-    env:
-    - TRAVIS_TAG=v1.0.3
     name: Windows
     os: windows
     language: bash
     before_install:
-    - choco install -y windows-sdk-7.1 vcbuildtools kb2519277
+    - choco install -y visualstudio2017-workload-vctools # windows-sdk-7.1 # vcbuildtools kb2519277
     - ./setup-cs.sh
-    script: ./windows-native-image.bat cs bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-win32 io.get-coursier:echo:$(echo "$TRAVIS_TAG" | sed 's/^v//')
-  - stage: native-launchers
-    env:
-    - TRAVIS_TAG=v1.0.3
-    os: osx
-    osx_image: xcode9.4
-    jdk: openjdk9
-    name: macOS
-    before_install:
-    - ./setup-cs.sh
-    script: ./cs bootstrap --native-image --graalvm 19.3 -o echo-x86_64-apple-darwin io.get-coursier:echo:$(echo "$TRAVIS_TAG" | sed 's/^v//')
+    script: ./windows-native-image.bat cs fetch ammonite
 
 script:
 - ./test.sh
