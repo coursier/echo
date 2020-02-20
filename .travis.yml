@@ -31,6 +31,7 @@ jobs:
     - TRAVIS_TAG=v1.0.3
     name: Windows
     os: windows
+    language: bash
     before_install:
     - ./setup-cs.sh
     script: ./cs.exe bootstrap --native-image --graalvm 19.3 -o echo-x86_64-pc-win32 io.get-coursier:echo:$(echo "$TRAVIS_TAG" | sed 's/^v//')
