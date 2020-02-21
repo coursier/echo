@@ -11,13 +11,53 @@ stages:
   - name: test
   - name: release
     if: (branch = master AND type = push) OR (tag IS present)
+  - name: native-launchers
 jobs:
   include:
+
   - scala: 2.11.12
     before_install:
     - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
   - stage: release
     script: sbt ci-release
+
+  - stage: native-launchers
+    before_install:
+      - &setup_cs bash <(curl -L https://github.com/coursier/ci-scripts/raw/master/travis-ci-setup-cs.sh) --graalvm
+    script:
+      - &build_launcher ./cs bootstrap --native-image --graalvm 19.3 -o echo io.get-coursier:echo:$(echo "$TRAVIS_TAG" | sed 's/^v//')
+    before_deploy:
+      - mv echo echo-x86_64-pc-linux
+    deploy: &deploy_base
+      provider: releases
+      api_key: ${GH_TOKEN}
+      file_glob: true
+      file: echo-*
+      skip_cleanup: true
+      draft: false
+      name: ${TRAVIS_TAG}
+      on:
+        tags: true
+
+  - stage: native-launchers
+    os: windows
+    language: shell
+    before_install: *setup_cs
+    script: *build_launcher
+    before_deploy:
+      - mv echo.exe echo-x86_64-pc-win32.exe
+    deploy:
+      <<: *deploy_base
+
+  - stage: native-launchers
+    os: osx
+    language: shell
+    before_install: *setup_cs
+    script: *build_launcher
+    before_deploy:
+      - mv echo echo-x86_64-apple-darwin
+    deploy:
+      <<: *deploy_base
 
 script:
 - ./test.sh
@@ -26,6 +66,7 @@ script:
 cache:
   directories:
   - $HOME/.cache
+  - $HOME/Library/Caches/Coursier
   - $HOME/.ivy2/cache
   - $HOME/.sbt
 branches:
