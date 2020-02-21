@@ -9,6 +9,7 @@ git:
 
 stages:
   - name: test
+    if: (branch = master AND type = push) OR (tag IS present)
   - name: release
     if: (branch = master AND type = push) OR (tag IS present)
   - name: native-launchers
@@ -22,6 +23,8 @@ jobs:
     script: sbt ci-release
 
   - stage: native-launchers
+    env:
+    - TRAVIS_TAG=v1.0.3
     before_install:
       - &setup_cs bash <(curl -L https://github.com/coursier/ci-scripts/raw/master/travis-ci-setup-cs.sh) --graalvm
     script:
@@ -40,6 +43,8 @@ jobs:
         tags: true
 
   - stage: native-launchers
+    env:
+    - TRAVIS_TAG=v1.0.3
     os: windows
     language: shell
     before_install: *setup_cs
@@ -50,6 +55,8 @@ jobs:
       <<: *deploy_base
 
   - stage: native-launchers
+    env:
+    - TRAVIS_TAG=v1.0.3
     os: osx
     language: shell
     before_install: *setup_cs
