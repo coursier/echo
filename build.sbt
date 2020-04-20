@@ -46,15 +46,5 @@ lazy val props = project
     autoScalaLibrary := false
   )
 
-lazy val echo = project
-  .in(file("."))
-  .aggregate(
-    jvm,
-    native,
-    props
-  )
-  .settings(
-    skip.in(publish) := true
-  )
-
 crossScalaVersions := Nil
+skip.in(publish) := true
