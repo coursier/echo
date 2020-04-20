@@ -32,12 +32,18 @@ lazy val native = project
     scalacOptions ++= Seq("-feature", "-deprecation")
   )
 
+lazy val env = project
+  .enablePlugins(PackPlugin)
+  .settings(
+    crossPaths := false,
+    autoScalaLibrary := false
+  )
+
 lazy val props = project
   .enablePlugins(PackPlugin)
   .settings(
     crossPaths := false,
-    autoScalaLibrary := false,
-    name := "props"
+    autoScalaLibrary := false
   )
 
 lazy val echo = project
