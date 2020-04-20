@@ -43,8 +43,7 @@ lazy val props = project
   .enablePlugins(PackPlugin)
   .settings(
     crossPaths := false,
-    autoScalaLibrary := false,
-    name := "props"
+    autoScalaLibrary := false
   )
 
 lazy val echo = project
