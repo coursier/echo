@@ -17,6 +17,7 @@ jobs:
   include:
   - scala: 2.11.12
   - stage: release
+    env: CI_RELEASE=env/publishSigned
     script: sbt ci-release
 
 script:
