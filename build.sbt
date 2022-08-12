@@ -21,7 +21,7 @@ lazy val jvm = project
     name := "echo"
   )
 
-val scala211 = "2.11.12"
+val scala211 = "2.13.8"
 
 lazy val native = project
   .enablePlugins(ScalaNativePlugin)
