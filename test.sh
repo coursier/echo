@@ -2,11 +2,11 @@
 set -e
 
 if [ ! -e jvm/target/pack/bin/echo ]; then
-  sbt jvm/pack
+  sbtn jvm/pack
 fi
 
 if [ ! -e props/target/pack/bin/props ]; then
-  sbt props/pack
+  sbtn props/pack
 fi
 
 
