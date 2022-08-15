@@ -47,4 +47,4 @@ lazy val props = project
   )
 
 crossScalaVersions := Nil
-skip.in(publish) := true
+(publish / skip) := true
