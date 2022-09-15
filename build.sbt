@@ -24,7 +24,7 @@ lazy val jvm = project
 val scala213 = "2.13.8"
 
 lazy val Deps = new {
-  def scalapy = "me.shadaj" %% "scalapy-core" % "0.5.2+5-83f1eb68"
+  def scalapy = Def.setting("me.shadaj" %%% "scalapy-core" % "0.5.2+5-83f1eb68")
 }
 
 lazy val native = project
@@ -43,7 +43,19 @@ lazy val scalapy = project
     crossScalaVersions := Seq(scala213),
     scalacOptions ++= Seq("-feature", "-deprecation"),
     libraryDependencies ++= Seq(
-      Deps.scalapy
+      Deps.scalapy.value
+    )
+  )
+
+lazy val `scalapy-native` = project
+  .enablePlugins(ScalaNativePlugin)
+  .settings(
+    name := "scalapy-echo",
+    scalaVersion := scala213,
+    crossScalaVersions := Seq(scala213),
+    scalacOptions ++= Seq("-feature", "-deprecation"),
+    libraryDependencies ++= Seq(
+      Deps.scalapy.value
     )
   )
 
