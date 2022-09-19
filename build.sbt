@@ -24,7 +24,7 @@ lazy val jvm = project
 val scala213 = "2.13.8"
 
 lazy val Deps = new {
-  def scalapy = Def.setting("me.shadaj" %%% "scalapy-core" % "0.5.2+5-83f1eb68")
+  def scalapy = Def.setting("me.shadaj" %%% "scalapy-core" % "0.5.2+8-f74f8dfe")
 }
 
 lazy val native = project
