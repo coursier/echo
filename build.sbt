@@ -21,7 +21,7 @@ lazy val jvm = project
     name := "echo"
   )
 
-val scala213 = "2.13.10"
+val scala213 = "2.13.13"
 
 lazy val Deps = new {
   def scalapy = Def.setting("me.shadaj" %%% "scalapy-core" % "0.5.2+8-f74f8dfe")
